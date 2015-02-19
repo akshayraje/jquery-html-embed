@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>jQuery HTML Embed</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://getbootstrap.com/assets/css/docs.min.css">
+    <link rel="stylesheet" href="http://cdn.jsdelivr.net/highlight.js/8.4.0/styles/github.min.css">
+
+    <!-- Custom styles for this template -->
+    <link href="demo.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand">jQuery HTML Embed</span>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#" id="showabout">About</a></li>
+            <li><a href="#" id="showsupport">Support</a></li>
+            <li><a href="#">Buy at Evanto</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-4 col-md-4 sidebar">
+          <h4>Examples and Live Demo</h4>
+          <form id="builder">
+            <h5 class="text-primary"><b>Select an example to understand options:</b></h5>                        
+            <div class="form-group">
+                <select class="form-control input-sm">
+                  <option value="html" selected>HTML</option>
+                  <option value="text">Text</option>
+                </select> 
+            </div>            
+            <h5 class="text-primary"><b>Plugin options</b></h5>                        
+            <div class="form-group">
+              <label for="url" class="small">Source URL</label> 
+              <input type="text" class="form-control input-sm" id="url" placeholder="Source URL" required>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="xpath" class="small">XPath</label>
+                  <input type="text" class="form-control input-sm" id="xpath" placeholder="XPath expression">
+                </div>                
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="select" class="small">Select</label>
+                  <input type="text" class="form-control input-sm" id="select" placeholder="Select content" value="*" required>
+                </div>                
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="cache" class="small">Cache</label>
+                  <input type="number" class="form-control input-sm" id="cache" placeholder="Cache timeout in minutes" value="60">
+                </div>                
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="output" class="small">Output</label>
+                  <select class="form-control input-sm" id="output">
+                    <option value="html" selected>HTML</option>
+                    <option value="text">Text</option>
+                  </select>
+                </div>                 
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="base_href" class="small">Base href</label>
+                  <input type="text" class="form-control input-sm" id="base_href" placeholder="Base href URL">
+                </div>               
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="base_target" class="small">Base target</label>
+                  <select class="form-control input-sm" id="base_target">
+                    <option value="" selected>Keep as source</option>
+                    <option value="_blank">_blank</option>
+                    <option value="_self">_self</option>
+                    <option value="_parent">_parent</option>
+                    <option value="_top">_top</option>
+                  </select>
+                </div>                   
+              </div>
+            </div> 
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="processing" class="small">Processing</label>
+                  <input type="text" class="form-control input-sm" id="processing" placeholder="Processing message">
+                </div>               
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="error" class="small">Error</label>
+                  <input type="text" class="form-control input-sm" id="error" placeholder="Error message">
+                </div>                 
+              </div>
+            </div>
+                                                      
+            <button type="submit" class="btn btn-primary btn-sm" id="btn-preview"><span class="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span> Preview</button>
+            <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon glyphicon-refresh" aria-hidden="true"></span> Reset to defaults</button>
+          </form>
+        </div>
+
+        <div class="col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 main">
+
+          <div role="about" id="about">
+            <div class="jumbotron">
+              <h1>jQuery HTML Embed</h1>
+              <p><small>A lightweight and easy to implement jQuery plugin that lets you embed and display real time content from any websites directly in your page. No server-side dependencies. No same origin policy constraints.</small></p>
+              <p>
+                <a class="btn btn-primary btn-lg" href="#" role="button">Buy now at Evanto</a>
+              </p>
+            </div>
+
+            <div class="bs-callout bs-callout-info">
+                <h4>No server-side dependencies. No same origin policy constraints.</h4>
+                <p>jQuery HTML Embed is designed to fetch, embed and display external content and hence unlike most "Ajax" requests, this is NOT subject to the <a href="http://en.wikipedia.org/wiki/Same_origin_policy" target="_blank">same origin policy</a>; it is designed to retrieve data from a different domain, subdomain or port without any server-side software, simply via a JSONP interface.</p>
+            </div>  
+
+            <div class="bs-callout bs-callout-info">
+                <h4>Examples and Live Demo</h4>
+                <p>jQuery HTML Embed is lightweight and easy to use. To see jQuery HTML Embed in action, select one of the examples provide and / or try out various plugin options in the left pane</p>
+            </div>                       
+
+            <div class="docs">
+            <h2>Documentation</h2>
+
+            <h4>Including files</h4>
+            <pre><code class="html">&lt;!-- jQuery 1.7.2+ --&gt;
+&lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"&gt;&lt;/script&gt;  
+
+&lt;!-- jQuery HTML Embed core JS file --&gt;
+&lt;script src="jquery.html-embed.js"&gt;&lt;/script&gt;</code></pre>
+            <p>It’s not required, but we recommend placing JavaScript files and initialization code in the footer of your site (before the closing <code>&lt;/body&gt;</code> tag). If you already have jquery.js on your site, don’t include it a second time, or use <code>jQuery.noConflict();</code> mode. </p> 
+
+            <h4>Initializing HTML Embed</h4>
+            <p>Embeding external content is as simple as this:</p>
+            <pre><code class="html">&lt;div class="content-embed"&gt;&lt;/div&gt;</code></pre>
+            <pre><code class="js">$( ".content-embed" ).htmlEmbed({         
+  url: 'http://example.com',
+  xpath: '//p',
+  // other options
+});</code></pre>
+            <h4>HTML Embed options</h4>
+            <p>Options should be passed to the initialization code and separated by comma, e.g.:</p>
+            <pre><code class="js">$( ".content-embed" ).htmlEmbed({         
+  url: 'http://example.com',
+  xpath: '//p',
+  processing: 'Loading. Please wait...',
+  // other options  
+});</code></pre>    
+            <p>Here you can find the list of all available options:</p>
+            <table class="table">            
+              <tr>
+                <th width="15%">Option</th>
+                <th width="10%">Default</th>
+                <th>Description</th>
+              </tr>
+              <tr>
+                <td>url</td>
+                <td><i class="text-muted">null</i></td>
+                <td class="small">
+                  <p>Source URL from where you need to fetch data</p>
+                </td>
+              </tr>
+              <tr>
+                <td>xpath</td>
+                <td><i class="text-muted">null</i></td>
+                <td class="small">
+                  <p>XPath expression to retrieve specific portions of the HTML page. Without XPath all of the page's HTML will be returned, which may not be useful in an application.</p>
+                  <p>If you are new to XPath, <a href="http://www.w3schools.com/xpath/xpath_syntax.asp" target="_blank">XPath Syntax</a> and <a href="http://www.w3schools.com/xpath/xpath_examples.asp" target="_blank">XPath Examples</a> on w3schools is a good starting point.</p>
+                </td>
+              </tr> 
+              <tr>
+                <td>select</td>
+                <td><i class="text-muted">*</i></td>
+                <td class="small">
+                  <p>By default all child elements of the specified XPath expression are fetched when the wildcard asterisk <code>*</code> is used. However you can specify a particular element in this option to process. To get just the content, you can specify <code>content</code> keyword as an option.</p>
+                  <p>In most usecases, you would not need to use this option as the default <code>*</code> is just what you need</p>
+                </td>
+              </tr> 
+              <tr>
+                <td>compat</td>
+                <td><i class="text-muted">html5</i></td>
+                <td class="small">
+                  <p>It can be configured to parse pages using the HTML 4.01 or HTML5 specification. By default its parsed using HTML5, but to parse using HTML 4.01 specification, you can set the value of this option to <code>html</code>. The returned response may be slightly different depending on the spec.</p>
+                  <p>In most usecases, you would not need to use this option as the default <code>html5</code> is just what you need</p>
+                </td>
+              </tr>               
+              <tr>
+                <td>cache</td>
+                <td><i class="text-muted">120</i></td>
+                <td class="small">
+                  <p>Timeout interval of the cached data in minutes. This is dependent on how frequently your source URL is expected to change content. If the content is not changed often, it is recommended to keep this as higher as possible to save external requests. Caching is done locally at a session level.
+                  </p>
+                </td>
+              </tr>    
+              <tr>
+                <td>output</td>
+                <td><i class="text-muted">html</i></td>
+                <td class="small">
+                  <p>Format of output rendered by the selector. Values can be <code>text</code> or <code>html</code>. Text format strips all html tags and returns only text content. Html format retains the the html tags in output.</p>
+                </td>
+              </tr>
+              <tr>
+                <td>base_href</td>
+                <td><i class="text-muted">null</i></td>
+                <td class="small">
+                  <p>Converts relative links from fetched content to absolute links. This can be handy to keep relative links functional. By default this will use the source URL itself intuitively to convert relative URLs to absolute; setting base_href to a specific URL will use that URL as the base for conversion. Note that base_href needs to be a complete URL (with http, hostname, path etc)</p>
+                  <p>Internally base_href converts href for a,area and link tags and converts src for iframe,img,input,script and source tags.</p>
+                </td>
+              </tr>
+              <tr>
+                <td>base_target</td>
+                <td><i class="text-muted">null</i></td>
+                <td class="small">
+                  <p>Sets a specified target attribute for all links (iframe,img,input,script and source tags). This can be handy to make sure external links open in a separate window. Values can be <code>_blank</code> or <code>_self</code> or <code>_parent</code> or <code>_top</code> or your custom framename.</p>
+                  <p>Internally base_target processes a and form tags.</p>
+                </td>
+              </tr>
+              <tr>
+                <td>processing</td>
+                <td><i class="text-muted"></i></td>
+                <td class="small">
+                  <p>Text or HTML to be displayed while the external content is being fetched.</p>
+                </td>
+              </tr>
+              <tr>
+                <td>error</td>
+                <td><i class="text-muted"></i></td>
+                <td class="small">
+                  <p>Text or HTML to be displayed if there is an error while fetching external content. Use <code>_error</code> to display the actual error returned.</p>
+                  <p>Apart from this, you can use the browsers console window to view detailed debug information</p>
+                </td>
+              </tr>                                                                                                                     
+            </table> 
+            </div>
+            <hr />
+
+          </div>
+
+          <div role="support" id="support">
+            <h2>Support Forum</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'jquery-html-embed'; 
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>            
+          </div>
+
+          <div role="demo" id="demo">
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active"><a href="#preview" aria-controls="preview" role="tab" data-toggle="tab"><span class="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span> Preview</a></li>
+              <li role="presentation"><a href="#code" aria-controls="code" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-console" aria-hidden="true"></span> Code</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="preview">
+                <h4 class="text-muted">Select one of the examples provide and / or try out various plugin options in the left pane</h4>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="code"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="http://cdn.jsdelivr.net/highlight.js/8.4.0/highlight.min.js"></script>
+    <script src="jquery.html-embed.min.js"></script>
+    <script>
+    hljs.initHighlightingOnLoad();
+    $(function() {
+
+      show_about();
+      $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+      });      
+
+      $( '#builder' ).submit(function( event ) {
+        show_demo();
+        $( "#preview" ).htmlEmbed({         
+          url: $( '#url' ).val(),
+          xpath: $( '#xpath' ).val(),
+          select: $( '#select' ).val(),
+          processing: $( '#processing' ).val(),
+          error: $( '#error' ).val(),
+          output: $( '#output option:selected' ).val(),
+          cache: $( '#cache' ).val(),
+          base_href: $( '#base_href' ).val(),
+          base_target: $( '#base_target option:selected' ).val()
+        });
+        event.preventDefault();
+      });
+
+      $( '#showabout' ).click(function() {
+        show_about();
+      });  
+
+      $( '#showsupport' ).click(function() {
+        show_support();
+      });             
+
+      function show_demo(){
+        $( "#about" ).hide();
+        $( "#demo" ).show();
+        $( "#support" ).hide();
+        $( "body" ).scrollTop( 0 );
+      }
+
+      function show_about(){
+        $( "#about" ).show();
+        $( "#demo" ).hide();
+        $( "#support" ).hide();
+        $( "body" ).scrollTop( 0 );
+      }
+
+      function show_support(){
+        $( "#about" ).hide();
+        $( "#demo" ).hide();
+        $( "#support" ).show();
+        $( "body" ).scrollTop( 0 );
+      }      
+
+    });
+    </script>    
+  </body>
+</html>
