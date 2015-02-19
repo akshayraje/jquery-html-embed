@@ -50,16 +50,18 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-4 col-md-4 sidebar">
-          <h4>Examples and Live Demo</h4>
           <form id="builder">
-            <h5 class="text-primary"><b>Select an example to understand options:</b></h5>                        
+            <h4>Select an example to understand options</h4>                        
             <div class="form-group">
-                <select class="form-control input-sm">
-                  <option value="html" selected>HTML</option>
-                  <option value="text">Text</option>
+                <select class="form-control input-sm" id="examples">
+                  <option>Select an example</option>
+                  <option value="wikipedia_otd">On this day... (from Wikipedia)</option>
+                  <option value="reuters_american_indices">All American Indices (from Reuters)</option>
+                  <option value="so_top_questions">Top Programming Questions (from Stackoverflow)</option>
+                  <option value="bloomberg_oil">Oil Prices (from Bloomberg)</option>                  
                 </select> 
             </div>            
-            <h5 class="text-primary"><b>Plugin options</b></h5>                        
+            <h4>Plugin options <button type="button" class="btn btn-link btn-xs" id="showoptions">[?]</button></h4>                       
             <div class="form-group">
               <label for="url" class="small">Source URL</label> 
               <input type="text" class="form-control input-sm" id="url" placeholder="Source URL" required>
@@ -82,7 +84,7 @@
               <div class="col-lg-6">
                 <div class="form-group">
                   <label for="cache" class="small">Cache</label>
-                  <input type="number" class="form-control input-sm" id="cache" placeholder="Cache timeout in minutes" value="60">
+                  <input type="number" class="form-control input-sm" id="cache" placeholder="Cache timeout in minutes" value="120">
                 </div>                
               </div>
               <div class="col-lg-6">
@@ -131,8 +133,8 @@
             </div>
                                                       
             <button type="submit" class="btn btn-primary btn-sm" id="btn-preview"><span class="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span> Preview</button>
-            <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon glyphicon-refresh" aria-hidden="true"></span> Reset to defaults</button>
           </form>
+
         </div>
 
         <div class="col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 main">
@@ -175,7 +177,7 @@
   xpath: '//p',
   // other options
 });</code></pre>
-            <h4>HTML Embed options</h4>
+            <h4 id="docs-options">HTML Embed options</h4>
             <p>Options should be passed to the initialization code and separated by comma, e.g.:</p>
             <pre><code class="js">$( ".content-embed" ).htmlEmbed({         
   url: 'http://example.com',
@@ -274,7 +276,7 @@
           </div>
 
           <div role="support" id="support">
-            <h2>Support Forum</h2>
+            <h2>jQuery HTML Embed Support Forum</h2>
             <div id="disqus_thread"></div>
             <script type="text/javascript">
                 var disqus_shortname = 'jquery-html-embed'; 
@@ -288,21 +290,10 @@
           </div>
 
           <div role="demo" id="demo">
-
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" class="active"><a href="#preview" aria-controls="preview" role="tab" data-toggle="tab"><span class="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span> Preview</a></li>
-              <li role="presentation"><a href="#code" aria-controls="code" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-console" aria-hidden="true"></span> Code</a></li>
-            </ul>
-
-            <!-- Tab panes -->
-            <div class="tab-content">
-              <div role="tabpanel" class="tab-pane active" id="preview">
-                <h4 class="text-muted">Select one of the examples provide and / or try out various plugin options in the left pane</h4>
-              </div>
-              <div role="tabpanel" class="tab-pane" id="code"></div>
+            <h2>Preview</h2>
+            <div role="tabpanel" class="tab-pane active" id="preview">
+              <h4 class="text-muted">Select one of the examples provide and / or try out various plugin options in the left pane</h4>
             </div>
-
           </div>
         </div>
       </div>
@@ -316,12 +307,12 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
     <script src="http://cdn.jsdelivr.net/highlight.js/8.4.0/highlight.min.js"></script>
-    <script src="jquery.html-embed.min.js"></script>
+    <script src="jquery.html-embed.js"></script>
     <script>
-    hljs.initHighlightingOnLoad();
     $(function() {
 
       show_about();
+
       $('pre code').each(function(i, block) {
         hljs.highlightBlock(block);
       });      
@@ -346,32 +337,73 @@
         show_about();
       });  
 
+      $( '#showoptions' ).click(function() {
+        show_about();
+        $(document).scrollTop( $("#docs-options").offset().top - 60); 
+      });        
+
       $( '#showsupport' ).click(function() {
         show_support();
-      });             
+      });
 
-      function show_demo(){
-        $( "#about" ).hide();
-        $( "#demo" ).show();
-        $( "#support" ).hide();
-        $( "body" ).scrollTop( 0 );
-      }
-
-      function show_about(){
-        $( "#about" ).show();
-        $( "#demo" ).hide();
-        $( "#support" ).hide();
-        $( "body" ).scrollTop( 0 );
-      }
-
-      function show_support(){
-        $( "#about" ).hide();
-        $( "#demo" ).hide();
-        $( "#support" ).show();
-        $( "body" ).scrollTop( 0 );
-      }      
+      $( "#examples" ).change(function () {
+        $.each( examples[$(this).val()], function( key, value ) {
+          $( '#' + key ).val(value);
+        });
+      });                    
 
     });
+
+    function show_demo(){
+      $( "#about" ).hide();
+      $( "#demo" ).show();
+      $( "#support" ).hide();
+      $( "body" ).scrollTop( 0 );  
+    }
+    function show_about(){
+      $( "#about" ).show();
+      $( "#demo" ).hide();
+      $( "#support" ).hide();
+      $( "body" ).scrollTop( 0 );
+    }
+
+    function show_support(){
+      $( "#about" ).hide();
+      $( "#demo" ).hide();
+      $( "#support" ).show();
+      $( "body" ).scrollTop( 0 );
+    }
+
+    var examples = {
+      wikipedia_otd: {
+        url: 'https://en.wikipedia.org/wiki/Main_Page',
+        xpath: "//*[@id='mp-otd']",
+        processing: 'Fetching. Please wait.',
+        error: '_error',
+        base_target: '_blank'
+      },
+      reuters_american_indices: {
+        url: 'http://www.reuters.com/finance/markets/indices',
+        xpath: "//*[@id='topContent']/div/div[2]/div[1]/div[2]/div/table",
+        processing: 'Fetching. Please wait.',
+        error: '_error',
+        base_target: '_blank'
+      },
+      so_top_questions: {
+        url: 'http://stackoverflow.com/',
+        xpath: "//div[@id='question-mini-list']//h3",
+        processing: 'Fetching. Please wait.',
+        error: '_error',
+        base_target: '_blank'
+      },
+      bloomberg_oil: {
+        url: 'http://www.bloomberg.com/energy/',
+        xpath: "//div[contains(concat(' ', @class, ' '), ' market_data_section ')]",
+        processing: 'Fetching. Please wait.',
+        error: '_error',
+        base_target: '_blank'
+      }                
+    };       
     </script>    
   </body>
 </html>
